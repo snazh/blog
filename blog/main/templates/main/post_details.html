@@ -1,0 +1,60 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+
+        {% if post.photo %}
+        <div class="col-md-6">
+            <img src="{{ post.photo.url }}" alt="post image" class="img-fluid border border-light rounded">
+        </div>
+
+        {% endif %}
+
+
+        <div class="col-md-6">
+            <h1>{{ post.title }}</h1>
+            <br>
+            <h3 class="text-muted">Category: {{ post.cat }}</h3>
+            <h3 class="text-muted">Date: {{ post.time_update|date:"d-m-Y H:i:s" }}</h3>
+        </div>
+    </div>
+    <br>
+    <div>
+        {{ post.content|linebreaks }}
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <div class="d-flex">
+                <button class="btn btn-success reaction-button">
+                    <i class="fas fa-thumbs-up reaction-icon"></i>
+                    <span class="counter">102</span>
+                </button>
+                <div class="mx-2"></div>
+                <button class="btn btn-danger reaction-button">
+                    <i class="fas fa-thumbs-down reaction-icon"></i>
+                    <span class="counter">12</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <div class="card comments-section">
+                <div class="card-header">
+                    Comments
+                </div>
+                <div class="card-body">
+                    <div class="comment">
+                        <p>Comment 1: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                    <div class="comment">
+                        <p>Comment 2: Nulla convallis libero in dolor pellentesque...</p>
+                    </div>
+                    <!-- More comments can be added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

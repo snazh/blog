@@ -1,0 +1,99 @@
+{% extends 'main/base.html' %}
+
+
+{%block content%}
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <a href="{% url 'add_post' %}">
+                <button type="button" class="btn btn-primary">Add post</button>
+            </a>
+            <h1>Filters</h1>
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    Select category
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {% if cat_selected == 0 %}
+                    <li><a class="dropdown-item" href="#">All categories</a></li>
+                    {% else %}
+                    <li><a class="dropdown-item" href="{% url 'posts' %}">All categories</a></li>
+                    {% endif %}
+                    {% for c in categories %}
+                    {% if c.post__count > 0 %}
+                    {% if c.pk == cat_selected %}
+                    <li class="selected dropdown-item">{{ c.name }}</li>
+                    {% else %}
+                    <li><a class="dropdown-item" href="{{ c.get_absolute_url }}">{{ c.name }}</a></li>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+
+        </div>
+        <div class="col-md-9">
+            {%if page_obj.has_other_pages%}
+            <nav>
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                    <li class="next-link">
+                        <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+                    </li>
+                    {% endif %}
+                    {% for p in paginator.page_range %}
+                    {% if page_obj.number == p %}
+                    <li class="page-item">
+                        <a class="page-link-selected">{{ p }}</a>
+                    </li>
+                    {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                    <li class="next-link">
+                        <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {%endif%}
+
+
+            <h1>Recent Publications</h1>
+            <hr style="border-color: #DFFF00;">
+            {% for p in publications %}
+            <div class="post-card">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h2>{{ p.title }}</h2>
+                        <p class="text-muted">Category: {{ p.cat }}</p>
+                        <p class="text-muted">Date: {{ p.time_update|date:"d-m-Y H:i:s" }}</p>
+                        {% autoescape on %}
+                        {{ p.content|linebreaks|truncatewords:50 }}
+                        {% endautoescape %}
+                        <br><br><br>
+                        <a href="{{ p.get_absolute_url }}">
+                            <button class="glow-on-hover" type="button">Read more</button>
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        {% if p.photo %}
+                        <img alt="post image" src="{{ p.photo.url }}" class="img-fluid border border-light rounded">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}

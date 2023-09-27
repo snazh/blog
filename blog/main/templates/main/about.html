@@ -1,0 +1,97 @@
+{% extends 'main/base.html' %}
+{%load static%}
+{%block title%}
+About us
+{%endblock%}
+
+
+{%block content%}
+<div class="container">
+    <div class="cascade-container">
+        <div class="cascade-item-right">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h1>Our Mission</h1>
+                    <p>Our mission at [Your Company Name] is to [describe your mission here]. We strive to
+                        [explain your
+                        goals and objectives] and contribute to [desired impact or outcome].</p>
+                </div>
+                <div class="col-lg-6">
+                    <img src="{% static 'main/img/mission.png' %}" alt="mission">
+                </div>
+            </div>
+        </div>
+        <br><br><br>
+        <hr class="custom-hr">
+        <br><br><br>
+        <div class="cascade-item-left">
+            <div class="row">
+                <div class="col-lg-6">
+                    <img src="{% static 'main/img/values.png' %}" alt="values">
+                </div>
+                <div class="col-lg-6">
+                    <h2>Our Values</h2>
+                    <ul>
+                        <li>[Value 1]: [Description of the first value.]</li>
+                        <li>[Value 2]: [Description of the second value.]</li>
+                        <li>[Value 3]: [Description of the third value.]</li>
+                        <!-- Add more values as needed -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br><br><br>
+        <hr class="custom-hr">
+        <br><br><br>
+        <div class="cascade-item-right">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2>Specific aims</h2>
+                    <ul>
+                        <li>[Aim 1]: [Description of the first value.]</li>
+                        <li>[Aim2 2]: [Description of the second value.]</li>
+                        <li>[Aim3 3]: [Description of the third value.]</li>
+                        <!-- Add more values as needed -->
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <img src="{% static 'main/img/Target-Aim.png' %}" alt="aims">
+                </div>
+            </div>
+        </div>
+        <br><br><br>
+        <hr class="custom-hr">
+        <br><br><br>
+        <div class="cascade-item-left">
+            <div class="row">
+                <div class="col-lg-6">
+                    <img src="{% static 'main/img/results.png' %}" alt="aims">
+
+                </div>
+                <div class="col-lg-6">
+                    <h2>Results</h2>
+                    <p>Our efforts have led to the following results: [Describe your results here].</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br>
+<hr class="custom-hr">
+<br><br><br>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-6">
+            <h2>Author Biography</h2>
+            <p>Sanzhar Konysbayev is an enthusiastic and motivated 11th-grade student who exemplifies the spirit of
+                determination, curiosity, and leadership. Born with a passion for knowledge and a drive to make a
+                positive impact, Sanzhar's journey through academia and extracurricular activities has been marked by
+                excellence and a strong commitment to personal growth.</p>
+        </div>
+        <div class="col-lg-6">
+            <img src="{% static 'main/img/about.png' %}" alt="About Us Image" class="img-fluid rounded shadow">
+        </div>
+    </div>
+</div>
+
+{%endblock%}
