@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+{% load static%}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header"><b>Login</b></div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        {%for f in form%}
+                        <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
+                        {%if f.errors%}
+                        <div class="error-block">{{ f.errors }}</div>
+                        {%endif%}
+                        {%endfor%}
+                        {%if form.non_field_errors%}
+                        <div class="error-block">{{form.non_field_errors}}</div>
+                        {%endif%}
+                        <button class="button-80" role="button" type="submit">Log In</button>
+
+                    </form>
+                    <p class="mt-3">Do not have an account? <a href="{% url 'users:register' %}">Create an account</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -12,10 +12,8 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
-    <link type="text/css" href="{% static 'main/css/styles.css' %}" rel="stylesheet">
-    <link type="text/css" href="{% static 'main/css/cascade.css' %}" rel="stylesheet">
-    <link type="text/css" href="{% static 'main/css/posts.css' %}" rel="stylesheet">
-    <link type="text/css" href="{% static 'main/css/paginator.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'main/css/styles_new.css' %}" rel="stylesheet">
+
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
@@ -31,7 +29,7 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
-                <a class="navbar-brand" href="{% url 'home' %}">
+                <a class="navbar-brand" href="{% url 'main:home' %}">
                     <img src="{% static 'main/img/logo.svg' %}" alt="Logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -41,42 +39,50 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link h4" href="{% url 'home' %}">
+                            <a class="nav-link h4" href="{% url 'main:home' %}">
                                 <i class="fas fa-home"></i> <!-- Font Awesome home icon -->
                                 Home <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link h4" href="{% url 'about' %}">
+                            <a class="nav-link h4" href="{% url 'main:about' %}">
                                 <i class="fas fa-info-circle"></i> <!-- Font Awesome info-circle icon -->
                                 About us
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link h4" href="{% url 'posts' %}">
+                            <a class="nav-link h4" href="{% url 'main:posts' %}">
                                 <i class="fas fa-newspaper"></i> <!-- Font Awesome newspaper icon -->
                                 Posts
                             </a>
 
                         <li class="nav-item">
-                            <a class="nav-link h4" href="{% url 'contacts' %}">
+                            <a class="nav-link h4" href="{% url 'main:contacts' %}">
                                 <i class="fas fa-address-book"></i> <!-- Font Awesome address-book icon -->
                                 Contacts
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link h4" href="{% url 'login' %}">
-                                <i class="fas fa-sign-in-alt"></i> <!-- Font Awesome sign-in-alt icon -->
-                                Login
-                            </a>
+                        {% if request.user.is_authenticated%}
 
+                        <li class="nav-item">
+                            <a class="nav-link h4"
+                               href="{% url 'users:user_profile' user_slug=request.user.userprofile.slug %}"><i
+                                    class="fas fa-user"></i> Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link h4" href="{% url 'registration' %}">
+                            <a class="nav-link h4" href="{% url 'users:logout' %}"><i class="fas fa-sign-out-alt"></i>
+                                Log
+                                Out</a>
+                        </li>
+                        {%else%}
+                        <li class="nav-item">
+                            <a class="nav-link h4" href="{% url 'users:register' %}">
                                 <i class="fas fa-user-plus"></i> <!-- Font Awesome user-plus icon -->
                                 Registration
                             </a>
                         </li>
+                        {%endif%}
+
 
                     </ul>
 
@@ -90,7 +96,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <p>&copy; 2023 Your Company. All rights reserved.</p>
+                        <p>&copy; 2023 Sanzhar blog. All rights reserved.</p>
                     </div>
                     <div class="col-md-6 text-md-right">
                         <ul class="list-inline">

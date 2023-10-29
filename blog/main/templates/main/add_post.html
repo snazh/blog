@@ -3,7 +3,7 @@
 {%block content%}
 <h1>{{title}}</h1>
 <div class="container">
-    <form class="border rounded p-4" action="{% url 'add_post'%}" method="post" enctype="multipart/form-data">
+    <form class="border rounded p-4" action="{% url 'main:add_post'%}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div>{{form.non_field_errors}}</div>
         {%for f in form%}

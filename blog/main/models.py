@@ -17,7 +17,7 @@ class Post(models.Model):
     cat = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name="categories")  # Foreign key (category)
 
     def get_absolute_url(self):
-        return reverse('post_detail', kwargs={'post_slug': self.slug})
+        return reverse('main:post_detail', kwargs={'post_slug': self.slug})
 
     def __str__(self):
         return self.title
@@ -33,7 +33,7 @@ class Category(models.Model):
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
 
     def get_absolute_url(self):
-        return reverse('category', kwargs={'cat_slug': self.slug})
+        return reverse('main:category', kwargs={'cat_slug': self.slug})
 
     def __str__(self):
         return self.name
