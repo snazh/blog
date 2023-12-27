@@ -48,7 +48,7 @@ body {
       box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
 }
 .label-color {
-    color: #FFFFFF;
+    color: #00FFFF;
 }
 
 /* button design */
@@ -63,6 +63,7 @@ body {
     position: relative;
     z-index: 0;
     border-radius: 10px;
+
 }
 
 .glow-on-hover:before {
@@ -80,10 +81,11 @@ body {
     opacity: 0;
     transition: opacity .3s ease-in-out;
     border-radius: 10px;
+
 }
 
 .glow-on-hover:active {
-    color: #000
+    color: #000;
 }
 
 .glow-on-hover:active:after {

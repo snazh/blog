@@ -91,4 +91,4 @@ class UpdateProfileView(DataMixin, View):
 
 def logout_user(request):
     logout(request)
-    return redirect('users:login')
+    return redirect('main:home')

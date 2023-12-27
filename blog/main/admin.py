@@ -4,7 +4,7 @@ from django.contrib import admin
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'time_create', 'photo', 'is_published')
+    list_display = ('id', 'user', 'slug','title', 'time_create', 'photo', 'is_published', 'like', 'dislike')
     list_display_link = ('id', 'title')
     search_fields = ('title', 'content')
     list_editable = ('is_published',)
@@ -19,5 +19,10 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
 
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'content', 'created_time')
+
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Comment, CommentAdmin)

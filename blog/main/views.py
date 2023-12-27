@@ -1,7 +1,7 @@
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, HttpResponseNotFound, Http404
+
 from django.urls import reverse_lazy
+
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
@@ -28,7 +28,7 @@ def login(request):
     context = {
         'title': "Login",
     }
-    return render(request, 'main/login.html', context=context)
+    return render(request, 'main/new_login.html', context=context)
 
 
 def contacts(request):
@@ -80,6 +80,32 @@ class ShowPost(DataMixin, DetailView):
         c_def = self.get_user_context(title=context['post'])
         return {**context, **c_def}
 
+    def post(self, request, *args, **kwargs):
+        post = self.get_object()
+
+        try:
+            evaluation_entry = EvaluationController.objects.get(user=self.request.user, post=post)
+        except EvaluationController.DoesNotExist:
+            evaluation_entry = None
+
+        if evaluation_entry is None:
+            if 'like' in request.POST:
+                post.like_post(True)
+                EvaluationController.objects.create(user=self.request.user, post=post, evaluation='like')
+            elif 'dislike' in request.POST:
+                post.dislike_post(True)
+                EvaluationController.objects.create(user=self.request.user, post=post, evaluation='dislike')
+        else:
+            evaluation_entry.delete()
+            if 'like' in request.POST:
+                post.like_post(False)
+                EvaluationController.objects.create(user=self.request.user, post=post, evaluation='like')
+            elif 'dislike' in request.POST:
+                post.dislike_post(False)
+                EvaluationController.objects.create(user=self.request.user, post=post, evaluation='dislike')
+
+        return redirect('main:post_detail', post_slug=post.slug)
+
 
 class AddPost(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddPostForm
@@ -87,10 +113,30 @@ class AddPost(LoginRequiredMixin, DataMixin, CreateView):
     login_url = reverse_lazy('login')  # redirect if user is not authorized
     raise_exception = True  # access is forbidden
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        titleSlug = form.instance.title.replace(' ', '').lower()
+        form.instance.slug = f"{self.request.user}-{titleSlug}"
+        form.instance.like = 0
+        form.instance.dislike = 0
+        return super().form_valid(form)
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title="Add Post")
         return {**context, **c_def}
+
+
+def add_comment(request):
+    publications = Post.objects.all()
+    categories = Category.objects.all()
+    context = {
+        'publications': publications,
+        'categories': categories,
+        'title': "",
+
+    }
+    return render(request, 'main/post_details.html', context=context)
 
 
 def pageNotFound(request, exception):

@@ -2,59 +2,46 @@
 {% load static %}
 
 {% block content %}
-<div class="container rounded bg-white mt-5 mb-5">
+<div class="container rounded bg-dark mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                 {%if user_profile.avatar %}
-
                 <img class="rounded-circle mt-5" width="150px" src="{{user_profile.avatar.url}}">
                 {%else%}
                 <img class="rounded-circle mt-5" width="150px" src="{% static 'users/img/default-avatar.jpg' %}">
                 {%endif%}
-                <span class="font-weight-bold">{{user_profile.user.username}}</span>
+                <span class="text-white">{{user_profile.user.username}}</span>
                 <span class="text-black-50">{{user_profile.user.email}}</span>
             </div>
         </div>
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Profile Settings</h4>
+                    <h4 class="text-right" style="color: #FFD300; font-weight: bold;">Profile Settings</h4>
                 </div>
                 <div class="row mt-2">
                     <div class="col-md-6">
-                        <label class="labels">First Name</label>
-                        {%if user_profile.first_name%}
+                        <label class="labels" style="color: #00FFFF; font-weight: bold;">First Name</label>
                         <p>{{user_profile.first_name}}</p>
-                        {%else%}
-                        <p>Empty</p>
-                        {%endif%}
                     </div>
                     <div class="col-md-6">
-                        <label class="labels">Last_name</label>
-                        {%if user_profile.last_name%}
+                        <label class="labels" style="color: #00FFFF; font-weight: bold;">Last_name</label>
                         <p>{{user_profile.last_name}}</p>
-                        {%else%}
-                        <p>Empty</p>
-                        {%endif%}
                     </div>
-
-
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-12">
-                        <label class="labels">Biography</label>
-                        {%if user_profile.bio%}
+                        <label class="labels" style="color: #00FFFF; font-weight: bold;">Biography</label>
                         <p>{{user_profile.bio}}</p>
-                        {%else%}
-                        <p>Empty</p>
-                        {%endif%}
                     </div>
 
                 </div>
 
                 <div class="mt-5 text-center">
-                    <a class="button-80" href="{% url 'users:update_profile'%}">Alter Profile</a>
+                    <button  class="glow-on-hover" href="{% url 'users:update_profile'%}">Alter Profile
+                        <a href="{% url 'users:update_profile'%}"></a>
+                    </button>
 
                 </div>
             </div>

@@ -1,6 +1,6 @@
 {%load static%}
 <!doctype html>
-<html lang="en">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -16,8 +16,7 @@
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-
+    
     {%block style%}
 
     {%endblock%}
@@ -40,25 +39,25 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
                             <a class="nav-link h4" href="{% url 'main:home' %}">
-                                <i class="fas fa-home"></i> <!-- Font Awesome home icon -->
+                                <i class="fas fa-home"></i>
                                 Home <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link h4" href="{% url 'main:about' %}">
-                                <i class="fas fa-info-circle"></i> <!-- Font Awesome info-circle icon -->
+                                <i class="fas fa-info-circle"></i>
                                 About us
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link h4" href="{% url 'main:posts' %}">
-                                <i class="fas fa-newspaper"></i> <!-- Font Awesome newspaper icon -->
+                                <i class="fas fa-newspaper"></i>
                                 Posts
                             </a>
 
                         <li class="nav-item">
                             <a class="nav-link h4" href="{% url 'main:contacts' %}">
-                                <i class="fas fa-address-book"></i> <!-- Font Awesome address-book icon -->
+                                <i class="fas fa-address-book"></i>
                                 Contacts
                             </a>
                         </li>
@@ -66,7 +65,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link h4"
-                               href="{% url 'users:user_profile' user_slug=request.user.userprofile.slug %}"><i
+                               href="{{ request.user.userprofile.get_absolute_url }}"><i
                                     class="fas fa-user"></i> Profile</a>
                         </li>
                         <li class="nav-item">
@@ -77,7 +76,7 @@
                         {%else%}
                         <li class="nav-item">
                             <a class="nav-link h4" href="{% url 'users:register' %}">
-                                <i class="fas fa-user-plus"></i> <!-- Font Awesome user-plus icon -->
+                                <i class="fas fa-user-plus"></i>
                                 Registration
                             </a>
                         </li>
@@ -90,7 +89,6 @@
             </div>
         </nav>
         {% block content %}
-
         {% endblock %}
         <footer class="bg-dark text-light py-4">
             <div class="container">

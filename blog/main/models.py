@@ -1,9 +1,7 @@
-from django.conf import settings
-from django.contrib.auth.models import User
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.urls import reverse
+
+from django.contrib.auth.models import User
 
 
 class Post(models.Model):
@@ -14,7 +12,24 @@ class Post(models.Model):
     time_create = models.DateTimeField(auto_now_add=True, verbose_name="create time")
     time_update = models.DateTimeField(auto_now=True, verbose_name="update time")
     is_published = models.BooleanField(default=True)
-    cat = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name="categories")  # Foreign key (category)
+    like = models.IntegerField(verbose_name='Likes number', null=True)
+    dislike = models.IntegerField(verbose_name='Dislikes number', null=True, blank=True)
+    cat = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name="categories")  # Foreign key (category)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="user")
+
+    def like_post(self, flag):
+        if flag:
+            self.like += 1
+        else:
+            self.like += 1
+        self.save()
+
+    def dislike_post(self, flag):
+        if flag:
+            self.like += 1
+        else:
+            self.like += 1
+        self.save()
 
     def get_absolute_url(self):
         return reverse('main:post_detail', kwargs={'post_slug': self.slug})
@@ -22,10 +37,34 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-    class Meta:  # displaying manner
+    class Meta:
         verbose_name = 'Publication'
-        verbose_name_plural = 'Publications'
         ordering = ['-time_create', 'title']
+
+
+class EvaluationController(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="user")
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, verbose_name="post")
+    evaluation = models.CharField(max_length=255,
+                                  choices=[('like', 'Like'), ('dislike', 'Dislike')],
+                                  default=None)
+
+    def __str__(self):
+        return f"{self.user}-{self.post_id}-{self.evaluation}"
+
+
+class Comment(models.Model):
+    content = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="user")
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name="create time")
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, verbose_name="post")
+
+    class Meta:
+        verbose_name = 'Comment'
+        ordering = ['created_time']
+
+    def __str__(self):
+        return f'{self.user}-{self.post_id}-{self.created_time}'
 
 
 class Category(models.Model):

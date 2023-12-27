@@ -15,9 +15,9 @@ def user_avatar_upload_to(instance, filename):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     slug = models.SlugField(unique=True, verbose_name='URL', db_index=True, max_length=255)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    bio = models.TextField()
+    first_name = models.CharField(max_length=30, null=True, blank=True)
+    last_name = models.CharField(max_length=30,null=True, blank=True)
+    bio = models.TextField(null=True, blank=True)
     avatar = models.ImageField(upload_to=user_avatar_upload_to, null=True, blank=True)
 
     def __str__(self):

@@ -12,7 +12,7 @@ class AddPostForm(forms.ModelForm):
 
     class Meta:
         model = Post  # name of model
-        fields = ['title', 'slug', 'content', 'photo', 'is_published', 'cat']  # fields which were retrieved
+        fields = ['title', 'content', 'photo', 'is_published', 'cat']  # fields which were retrieved
         # widgets for style of form elements
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control form-control-blue', 'id': 'title', 'name': 'title'}),
@@ -35,3 +35,4 @@ class AddPostForm(forms.ModelForm):
             title = self.cleaned_data['title']
             slug = slugify(title)
         return slug
+
