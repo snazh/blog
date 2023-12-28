@@ -85,25 +85,42 @@ class ShowPost(DataMixin, DetailView):
 
         try:
             evaluation_entry = EvaluationController.objects.get(user=self.request.user, post=post)
-        except EvaluationController.DoesNotExist:
-            evaluation_entry = None
 
-        if evaluation_entry is None:
+        except EvaluationController.DoesNotExist:
+            evaluation_entry = 'zero'
+
+        if evaluation_entry == 'zero':
             if 'like' in request.POST:
-                post.like_post(True)
+                post.like_post(flag=True)
                 EvaluationController.objects.create(user=self.request.user, post=post, evaluation='like')
             elif 'dislike' in request.POST:
-                post.dislike_post(True)
+                post.dislike_post(flag=True)
                 EvaluationController.objects.create(user=self.request.user, post=post, evaluation='dislike')
         else:
-            evaluation_entry.delete()
-            if 'like' in request.POST:
-                post.like_post(False)
-                EvaluationController.objects.create(user=self.request.user, post=post, evaluation='like')
-            elif 'dislike' in request.POST:
-                post.dislike_post(False)
-                EvaluationController.objects.create(user=self.request.user, post=post, evaluation='dislike')
 
+            if 'like' in request.POST:
+
+                if evaluation_entry.evaluation == 'like':
+                    post.like_post(False)
+                    EvaluationController.objects.update(user=self.request.user, post=post, evaluation='zero')
+                elif evaluation_entry.evaluation == 'dislike':
+                    post.dislike_post(False)
+                    post.like_post(True)
+                    EvaluationController.objects.update(user=self.request.user, post=post, evaluation='like')
+                else:
+                    EvaluationController.objects.update(user=self.request.user, post=post, evaluation='like')
+                    post.like_post(True)
+            elif 'dislike' in request.POST:
+                if evaluation_entry.evaluation == 'dislike':
+                    post.dislike_post(False)
+                    EvaluationController.objects.update(user=self.request.user, post=post, evaluation='zero')
+                elif evaluation_entry.evaluation == 'like':
+                    post.dislike_post(True)
+                    post.like_post(False)
+                    EvaluationController.objects.update(user=self.request.user, post=post, evaluation='dislike')
+                else:
+                    EvaluationController.objects.update(user=self.request.user, post=post, evaluation='dislike')
+                    post.dislike_post(True)
         return redirect('main:post_detail', post_slug=post.slug)
 
 

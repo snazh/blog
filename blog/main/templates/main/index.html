@@ -1,4 +1,17 @@
 {% extends 'main/base.html' %}
+{%load static%}
+{%block style%}
+<style>
+p { text-indent: 25px;
+}
+.neon-border {
+        border: 2px solid #00FFFF;
+        box-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF, 0 0 40px #00FFFF;
+        background-color: black;
+}
+
+</style>
+{%endblock%}
 {% block content %}
 <div class="container mt-5">
     <div class="row">
@@ -9,7 +22,7 @@
                 where I'll document my experiences, triumphs, and challenges as I take my baby steps into the realm of
                 code, algorithms, and endless possibilities.</p>
 
-            <img src="beginner-coding-image.jpg" class="img-fluid mb-4" alt="Beginner Coding Image">
+
 
             <h3>Embracing the Learning Curve</h3>
             <p>As a complete novice in the world of IT, I've decided to embrace this learning curve with open arms. The
@@ -26,18 +39,18 @@
                 experiences, struggles, and insights might resonate with others who are just starting. I'm not an expert
                 – I'm a beginner, and I believe there's immense value in sharing the perspective of someone who's right
                 at the beginning.</p>
-
+            <br><br>
             <!-- Support Author Section -->
-            <div class="card mb-4">
+            <div class="card mb-4 neon-border">
                 <div class="card-body">
                     <div class="media">
-                        <img src="author-image.jpg" class="mr-3" alt="Author Image" width="100">
+                        <img src="{% static 'main/img/main.png' %}" class="mr-3" alt="Author Image" width="200">
                         <div class="media-body">
                             <h5 class="mt-0">Join Me on This Journey</h5>
                             <p>If you're also a beginner or curious about the world of IT development, let's learn
                                 together! Share your thoughts, questions, and experiences in the comments. Together,
                                 we'll navigate this exciting new path.</p>
-                            <button class="btn btn-primary">Connect</button>
+                            <button class="glow-on-hover">Connect</button>
                         </div>
                     </div>
                 </div>
@@ -45,13 +58,14 @@
             <!-- End of Support Author Section -->
 
         </div>
-        <div class="col-lg-4">
-            <div class="card">
+        <div class="col-lg-4 ">
+            <div class="card neon-border">
                 <div class="card-body">
                     <h5 class="card-title">Stay Updated</h5>
                     <p class="card-text">Don't miss out on my latest blog posts and progress updates. Subscribe to stay
                         in the loop!</p>
-                    <a href="#" class="btn btn-secondary">Subscribe</a>
+                    <button class="glow-on-hover">Subscribe</button>
+
                 </div>
             </div>
         </div>

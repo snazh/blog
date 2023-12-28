@@ -1,5 +1,15 @@
 {% extends 'main/base.html' %}
 {%load static%}
+
+{%block style%}
+<style>
+p { text-indent: 25px;
+    font-size: 1.3em;
+}
+
+
+</style>
+{%endblock%}
 {%block content%}
 <div class="container">
     <div class="cascade-container">
@@ -7,9 +17,10 @@
             <div class="row">
                 <div class="col-lg-6">
                     <h1>Our Mission</h1>
-                    <p>Our mission at [Your Company Name] is to [describe your mission here]. We strive to
-                        [explain your
-                        goals and objectives] and contribute to [desired impact or outcome].</p>
+                    <p>Mattis vulputate enim nulla aliquet porttitor. Elementum nibh tellus molestie nunc non. Id nibh
+                        tortor id aliquet lectus proin. Amet consectetur adipiscing elit ut. Quam lacus suspendisse
+                        faucibus interdum posuere lorem ipsum. Turpis egestas sed tempus urna et pharetra. Urna molestie
+                        at elementum eu facilisis sed odio. Venenatis cras sed felis eget.</p>
                 </div>
                 <div class="col-lg-6">
                     <img src="{% static 'main/img/mission.png' %}" alt="mission">
@@ -27,9 +38,15 @@
                 <div class="col-lg-6">
                     <h2>Our Values</h2>
                     <ul>
-                        <li>[Value 1]: [Description of the first value.]</li>
-                        <li>[Value 2]: [Description of the second value.]</li>
-                        <li>[Value 3]: [Description of the third value.]</li>
+                        <li><p>Value: Quis risus sed vulputate odio ut enim. Condimentum id venenatis a condimentum
+                            vitae sapien pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices
+                            tincidunt arcu non.</p></li>
+                        <li><p>Value: Non tellus orci ac auctor augue mauris. Nisi scelerisque eu ultrices vitae auctor
+                            eu augue ut lectus. Ut enim blandit volutpat maecenas volutpat blandit aliquam. Morbi
+                            tristique senectus et netus et.</p></li>
+                        <li><p>Value: Varius sit amet mattis vulputate enim nulla aliquet porttitor. Tortor vitae purus
+                            faucibus ornare suspendisse sed nisi. Ornare lectus sit amet est placerat in egestas erat
+                            imperdiet. Quam lacus suspendisse faucibus interdum posuere lorem ipsum.</p></li>
                         <!-- Add more values as needed -->
                     </ul>
                 </div>
@@ -43,9 +60,9 @@
                 <div class="col-lg-6">
                     <h2>Specific aims</h2>
                     <ul>
-                        <li>[Aim 1]: [Description of the first value.]</li>
-                        <li>[Aim2 2]: [Description of the second value.]</li>
-                        <li>[Aim3 3]: [Description of the third value.]</li>
+                        <li><p>Aim 1: Deploy my blog</p></li>
+                        <li><p>Aim 2: Get a scholarship in the USA</p></li>
+                        <li><p>Aim 3: Pass coding interview successfully</p></li>
                         <!-- Add more values as needed -->
                     </ul>
                 </div>
@@ -65,7 +82,15 @@
                 </div>
                 <div class="col-lg-6">
                     <h2>Results</h2>
-                    <p>Our efforts have led to the following results: [Describe your results here].</p>
+                    <p>Not yet. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                        incididunt ut labore et dolore magna aliqua. At augue eget arcu dictum varius duis at
+                        consectetur. Facilisis mauris sit amet massa. Interdum velit euismod in pellentesque. Id
+                        venenatis a condimentum vitae sapien pellentesque. Rhoncus urna neque viverra justo nec
+                        ultrices. Massa tincidunt dui ut ornare lectus sit amet est. Justo nec ultrices dui sapien eget
+                        mi proin sed libero. Sem et tortor consequat id. Mi proin sed libero enim. Ut enim blandit
+                        volutpat maecenas volutpat blandit aliquam etiam. Sit amet massa vitae tortor condimentum
+                        lacinia quis vel. Id diam vel quam elementum pulvinar etiam non. Urna et pharetra pharetra massa
+                        massa ultricies mi quis hendrerit.</p>
                 </div>
             </div>
         </div>

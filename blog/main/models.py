@@ -21,14 +21,14 @@ class Post(models.Model):
         if flag:
             self.like += 1
         else:
-            self.like += 1
+            self.like -= 1
         self.save()
 
     def dislike_post(self, flag):
         if flag:
-            self.like += 1
+            self.dislike += 1
         else:
-            self.like += 1
+            self.dislike -= 1
         self.save()
 
     def get_absolute_url(self):
@@ -46,8 +46,8 @@ class EvaluationController(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="user")
     post = models.ForeignKey('Post', on_delete=models.CASCADE, verbose_name="post")
     evaluation = models.CharField(max_length=255,
-                                  choices=[('like', 'Like'), ('dislike', 'Dislike')],
-                                  default=None)
+                                  choices=[('like', 'Like'), ('dislike', 'Dislike'), ('zero', 'Zero')],
+                                  default=('zero', 'Zero'))
 
     def __str__(self):
         return f"{self.user}-{self.post_id}-{self.evaluation}"
