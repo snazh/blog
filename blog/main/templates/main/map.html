@@ -1,0 +1,37 @@
+{%extends 'main/base.html'%}
+
+{%block content%}
+<div class="row">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="col-md-2 col-lg-2 d-md-block bg-light sidebar mx-auto">
+        <br>
+        <div class="position-sticky">
+            <div class="my-4">
+                <h4>Search</h4>
+                <div class="input-group">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="text" class="form-control" placeholder="Search...">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit">Go</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Content -->
+    <main class="col-md-9 col-lg-9 px-md-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8 mx-auto">
+                <div>
+                    {{ map|safe }}
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+{%endblock%}

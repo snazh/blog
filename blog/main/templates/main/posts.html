@@ -2,12 +2,9 @@
 {%block style%}
 <style>
 p { text-indent: 25px;
+font-size: 1.3em;
 }
-.neon-border {
-    border: 2px solid #00FFFF;
-    box-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF, 0 0 40px #00FFFF;
-    background-color: black;
-}
+
 
 </style>
 {%endblock%}
@@ -92,14 +89,14 @@ p { text-indent: 25px;
                             <button class="glow-on-hover" type="button">Read more</button>
                         </a>
                     </div>
-                    <div class="col-md-4 neon-border">
+                    <div class="col-md-4">
                         {% if p.photo %}
                         <img alt="post image" src="{{ p.photo.url }}" class="img-fluid border border-light rounded">
                         {% endif %}
                     </div>
                 </div>
             </div>
-
+            <hr style="border-color: #00FFFF;">
             {% endfor %}
         </div>
     </div>

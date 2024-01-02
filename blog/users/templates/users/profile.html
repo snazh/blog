@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+
 <div class="container rounded bg-dark mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
@@ -39,8 +40,8 @@
                 </div>
 
                 <div class="mt-5 text-center">
-                    <button  class="glow-on-hover" href="{% url 'users:update_profile'%}">Alter Profile
-                        <a href="{% url 'users:update_profile'%}"></a>
+                    <button  class="glow-on-hover">
+                        <a href="{% url 'users:update_profile' %}">Alter Profile</a>
                     </button>
 
                 </div>
@@ -50,4 +51,7 @@
     </div>
 </div>
 
+{%for l in liked_posts%}
+    <p>{{l.post}}</p>
+{%endfor%}
 {% endblock %}

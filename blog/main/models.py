@@ -81,3 +81,14 @@ class Category(models.Model):
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
         ordering = ['id']
+
+
+class Search(models.Model):
+    name = models.CharField(max_length=60, verbose_name='Branch name')
+    lng = models.FloatField(verbose_name='Longitude')
+    lat = models.FloatField(verbose_name='Latitude')
+    date = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True, verbose_name='Status')
+
+    def __str__(self):
+        return self.name

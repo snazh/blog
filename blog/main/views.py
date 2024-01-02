@@ -4,10 +4,11 @@ from django.urls import reverse_lazy
 
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator
+
 from .forms import *
 from .models import *
 from .utils import *
+import folium
 
 
 def index(request):
@@ -69,20 +70,22 @@ class MainCategory(DataMixin, ListView):
         return {**context, **c_def}
 
 
-class ShowPost(DataMixin, DetailView):
+class ShowPost(DataMixin, DetailView, CreateView):
     model = Post
     template_name = 'main/post_details.html'
     slug_url_kwarg = 'post_slug'
     context_object_name = 'post'
+    form_class = AddCommentForm
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title=context['post'])
+        c_def['comments'] = Comment.objects.filter(post=self.get_object())
         return {**context, **c_def}
 
     def post(self, request, *args, **kwargs):
         post = self.get_object()
-
+        # like dislike system
         try:
             evaluation_entry = EvaluationController.objects.get(user=self.request.user, post=post)
 
@@ -90,6 +93,7 @@ class ShowPost(DataMixin, DetailView):
             evaluation_entry = 'zero'
 
         if evaluation_entry == 'zero':
+
             if 'like' in request.POST:
                 post.like_post(flag=True)
                 EvaluationController.objects.create(user=self.request.user, post=post, evaluation='like')
@@ -121,7 +125,20 @@ class ShowPost(DataMixin, DetailView):
                 else:
                     EvaluationController.objects.update(user=self.request.user, post=post, evaluation='dislike')
                     post.dislike_post(True)
+
         return redirect('main:post_detail', post_slug=post.slug)
+
+
+class AddCommentView(CreateView):
+    model = Comment
+    form_class = AddCommentForm
+    template_name = 'main/add_comment.html'
+    success_url = '/'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.post = get_object_or_404(Post, slug=self.kwargs['post_slug'])
+        return super().form_valid(form)
 
 
 class AddPost(LoginRequiredMixin, DataMixin, CreateView):
@@ -144,20 +161,26 @@ class AddPost(LoginRequiredMixin, DataMixin, CreateView):
         return {**context, **c_def}
 
 
-def add_comment(request):
-    publications = Post.objects.all()
-    categories = Category.objects.all()
-    context = {
-        'publications': publications,
-        'categories': categories,
-        'title': "",
-
-    }
-    return render(request, 'main/post_details.html', context=context)
-
-
 def pageNotFound(request, exception):
     return render(request, 'main/ErrorPage.html')
+
+
+def map_view(request):
+    title = 'Map'
+    form = folium.Figure(height=1000, width=1100)
+    m = folium.Map(location=[-0.43, 0.32], tiles="openstreetmap", zoom_start=2.2, min_zoom=2,
+                   max_bounds=True).add_to(form)
+    for branch in Search.objects.filter(active=True):
+        folium.Marker([branch.lng, branch.lat], tooltip='Click for more', popup=branch.name).add_to(m)
+
+    # Get HTML Representation of Map Object
+    map_html = m._repr_html_()
+
+    context = {
+        'title': title,  # Corrected title assignment
+        'map': map_html
+    }
+    return render(request, 'main/map.html', context=context)
 
 
 '''

@@ -1,5 +1,13 @@
 {% extends 'main/base.html' %}
+{%block style%}
+<style>
+p { text-indent: 25px;
+font-size: 1.3em;
+}
 
+
+</style>
+{%endblock%}
 {% block content %}
 <div class="container mt-5">
     <div class="row">
@@ -37,27 +45,49 @@
                         <i class="fas fa-thumbs-down reaction-icon"></i>
                         <span class="counter">{{post.dislike}}</span>
                     </button>
+
                 </div>
+                {% if user.is_authenticated %}
+                <div class="comment-form">
+                    <h5>Add your comment:</h5>
+
+
+                    <a href="{% url 'main:add_comment' post_slug=post.slug %}" class="glow-on-hover">Post Comment</a>
+
+                </div>
+                {% else %}
+                <div class="comment-login-prompt">
+                    <p>Please <a href="{% url 'users:login' %}">Log in</a> to comment.</p>
+                </div>
+                {% endif %}
             </div>
         </div>
     </form>
-    <div class="row mt-3">
-        <div class="col-md-6">
-            <div class="card comments-section">
-                <div class="card-header">
-                    Comments
-                </div>
-                <div class="card-body">
-                    <div class="comment">
-                        <p>Comment 1: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <hr style="border-color: #DFFF00;">
+    <div class="container mt-5">
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <div class="card comments-section" style="background-color: rgba(255, 255, 255, 0);">
+                    <div class="card-header">
+                        <h4>Comments: <span class="comment-count">{{ comments.count }}</span></h4>
                     </div>
-                    <div class="comment">
-                        <p>Comment 2: Nulla convallis libero in dolor pellentesque...</p>
+                    <div class="card-body">
+                        {% for comment in comments %}
+                        <div class="comment">
+                            <div class="comment-header">
+                                <span class="comment-author">{{ comment.user }}</span>
+                                <span class="comment-date">{{ comment.created_time|timesince }} ago</span>
+                            </div>
+                            <p class="comment-content">{{ comment.content }}</p>
+                        </div>
+                        {% empty %}
+                        <div class="comment no-comments">No comments yet.</div>
+                        {% endfor %}
                     </div>
-                    <!-- More comments can be added here -->
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 {% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="comment-form">
+    <h5>Add your comment:</h5>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.content }}
+        <button type="submit" class="glow-on-hover">Post Comment</button>
+    </form>
+</div>
+{% else %}
+<div class="comment-login-prompt">
+    <p>Please <a href="{% url 'users:login' %}">Log in</a> to comment.</p>
+</div>
+{% endif %}
+{% endblock %}

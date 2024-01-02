@@ -12,5 +12,6 @@ urlpatterns = [
                   path('add_post/', AddPost.as_view(), name='add_post'),
                   path('post_detail/<slug:post_slug>/', ShowPost.as_view(), name='post_detail'),
                   path('category/<slug:cat_slug>/', MainCategory.as_view(), name='category'),
-
+                  path('post_detail/<slug:post_slug>/add_comment/', AddCommentView.as_view(), name='add_comment'),
+                  path('map/', map_view, name='map'),
               ]

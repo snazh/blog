@@ -36,3 +36,13 @@ class AddPostForm(forms.ModelForm):
             slug = slugify(title)
         return slug
 
+
+class AddCommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(
+                attrs={'class': 'form-control form-control-blue', 'cols': 60, 'rows': 10, 'id': 'content',
+                       'name': 'content'}),
+        }

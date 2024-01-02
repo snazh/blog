@@ -1,13 +1,15 @@
 from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, UpdateView
 from .forms import RegistrationForm, LoginForm, UpdateProfileForm
 from .models import UserProfile
 from .utils import DataMixin
+from main.models import Post, EvaluationController
 
 
 class SignUp(DataMixin, CreateView):
@@ -49,44 +51,34 @@ class ShowUser(DataMixin, DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        post_info = {
 
-        title = self.get_user_context(title="Profile")
-        return {**context, **title}
+            'title': 'Profile',
+            'posts': Post.objects.filter(user=self.request.user),
+            'liked_posts': EvaluationController.objects.filter(user=self.request.user, evaluation='like'),
+            'disliked_posts': EvaluationController.objects.filter(user=self.request.user, evaluation='dislike')
+        }
+
+        context['posts'] = Post.objects.filter(user=self.request.user)
+        return {**context, **post_info}
 
 
-class UpdateProfileView(DataMixin, View):
+class UpdateProfileView(LoginRequiredMixin, UpdateView):
+    model = UserProfile
+    form_class = UpdateProfileForm
     template_name = 'users/update_profile.html'
 
-    def get(self, request, *args, **kwargs):
-        # Fetch user profile using ORM
-        profile = UserProfile.objects.get(user=request.user)
+    def get_object(self, queryset=None):
+        return self.request.user.userprofile
 
-        # Populate form with user profile data
-        form = UpdateProfileForm(instance=profile)
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        print(self.slug_url_kwarg, self.slug_url_kwarg)
+        return response
 
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request, *args, **kwargs):
-        form = UpdateProfileForm(request.POST, request.FILES)
-
-        if form.is_valid():
-            # Update user profile using ORM
-            profile = UserProfile.objects.get(user=request.user)
-            profile.first_name = form.cleaned_data['first_name']
-            profile.last_name = form.cleaned_data['last_name']
-            profile.bio = form.cleaned_data['bio']
-            profile.avatar = form.cleaned_data['avatar']
-            profile.save()
-
-            # Redirect to a success page
-            return reverse_lazy('main:success_reg')
-
-        return render(request, self.template_name, {'form': form})
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        title = self.get_user_context(title="Update profile")
-        return {**context, **title}
+    def get_success_url(self):
+        # Redirect to the user's profile page after successful update
+        return reverse_lazy('users:user_profile', kwargs={'user_slug': self.object.slug})
 
 
 def logout_user(request):
