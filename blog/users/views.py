@@ -4,7 +4,6 @@ from django.http import Http404
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
-from django.views import View
 from django.views.generic import CreateView, DetailView, UpdateView
 from .forms import RegistrationForm, LoginForm, UpdateProfileForm
 from .models import UserProfile
@@ -77,7 +76,7 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
         return response
 
     def get_success_url(self):
-        # Redirect to the user's profile page after successful update
+
         return reverse_lazy('users:user_profile', kwargs={'user_slug': self.object.slug})
 
 
