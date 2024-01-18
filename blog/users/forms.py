@@ -58,10 +58,37 @@ class UpdateProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ('first_name', 'last_name', 'bio', 'avatar')
 
+    first_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'input_text', 'name': "first_name", 'placeholder': "What's your name?"})
+    )
+
+    last_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'input_text', 'name': "last_name", 'placeholder': "What's your surname?"})
+    )
+
+    bio = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'input_text', 'name': "bio", 'placeholder': 'Your background'})
+    )
+    avatar = forms.ImageField(
+        widget=forms.TextInput(
+            attrs={'class': 'input_text', 'type': 'file'})
+    )
+
+    # <input type="file" id="images" accept="image/*" required>
     def clean_first_name(self):  # custom validator
         first_name = self.cleaned_data['first_name']
         if len(first_name) < 5:
             raise ValidationError('Too short name')
         elif len(first_name) > 30:
             raise ValidationError('Too long name')
+        return first_name
+
+    def last_first_name(self):  # custom validator
+        first_name = self.cleaned_data['first_name']
+        if len(first_name) < 5:
+            raise ValidationError('Too short last name')
+        elif len(first_name) > 30:
+            raise ValidationError('Too long last name')
         return first_name

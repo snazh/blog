@@ -7,7 +7,7 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'slug', 'title', 'time_create', 'photo', 'is_published', 'like', 'dislike')
     list_display_link = ('id', 'title')
     search_fields = ('title', 'content')
-    list_editable = ('is_published', 'like', 'dislike')
+    list_editable = ('is_published', 'photo','like', 'dislike')
     list_filter = ('time_create', 'is_published')
     prepopulated_fields = {"slug": ("title",)}
 

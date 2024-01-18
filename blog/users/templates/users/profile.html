@@ -1,9 +1,11 @@
 {% extends 'main/base.html' %}
 {% load static %}
-
+{%block style%}
+<link type="text/css" href="{% static 'users/css/forms.css' %}" rel="stylesheet">
+{%endblock%}
 {% block content %}
 
-<div class="container rounded bg-dark mt-5 mb-5">
+<div class="container rounded bg-dark mt-5 mb-5 neon-border">
     <div class="row">
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
@@ -40,18 +42,24 @@
                 </div>
 
                 <div class="mt-5 text-center">
-                    <button  class="glow-on-hover">
+                    <button class="glow-on-hover">
                         <a href="{% url 'users:update_profile' %}">Alter Profile</a>
                     </button>
 
                 </div>
             </div>
         </div>
+        <div class="col-md-3">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                {%for l in liked_posts%}
+                <p>{{l.post}}</p>
+                {%endfor%}
+
+            </div>
+        </div>
 
     </div>
 </div>
+<br><br><br><br><br><br><br><br><br>
 
-{%for l in liked_posts%}
-    <p>{{l.post}}</p>
-{%endfor%}
 {% endblock %}

@@ -1,14 +1,23 @@
+import datetime
+
 from django.db import models
 from django.urls import reverse
 
 from django.contrib.auth.models import User
 
 
+def user_post_upload_to(instance, filename):
+    user_slug = instance.slug
+    current_time = datetime.datetime.now()
+    filename = f'{current_time}_{filename}'
+    return f'posts/{user_slug}/{filename}'
+
+
 class Post(models.Model):
     title = models.CharField(max_length=255, verbose_name="title")
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
     content = models.TextField(blank=False, verbose_name="content")
-    photo = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name="photo")
+    photo = models.ImageField(upload_to=user_post_upload_to, verbose_name="photo")
     time_create = models.DateTimeField(auto_now_add=True, verbose_name="create time")
     time_update = models.DateTimeField(auto_now=True, verbose_name="update time")
     is_published = models.BooleanField(default=True)
@@ -64,7 +73,7 @@ class Comment(models.Model):
         ordering = ['created_time']
 
     def __str__(self):
-        return f'{self.user}-{self.post_id}-{self.created_time}'
+        return f'{self.user}-{self.pk}-{self.created_time}'
 
 
 class Category(models.Model):

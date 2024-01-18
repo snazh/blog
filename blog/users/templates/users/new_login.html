@@ -56,7 +56,7 @@
 
         <div class="content">
 
-            <h2>Sign In</h2>
+            <h2>Log In</h2>
 
             <div class="form">
 
@@ -70,12 +70,15 @@
                     {%if f.errors%}
                     <div class="error-block">{{ f.errors }}</div>
                     {%endif%}
+                    <br>
                     {% endfor %}
                     <br>
                     <div class="inputBox">
 
                         <input type="submit" value="Login">
                     </div>
+                    <br>
+                    <div class="links"><a href="#">Do not have an account?</a> <a href="{%url 'users:register'%}">Sign up</a></div>
                 </form>
             </div>
         </div>

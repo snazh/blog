@@ -54,8 +54,7 @@ class ShowUser(DataMixin, DetailView):
 
             'title': 'Profile',
             'posts': Post.objects.filter(user=self.request.user),
-            'liked_posts': EvaluationController.objects.filter(user=self.request.user, evaluation='like'),
-            'disliked_posts': EvaluationController.objects.filter(user=self.request.user, evaluation='dislike')
+
         }
 
         context['posts'] = Post.objects.filter(user=self.request.user)

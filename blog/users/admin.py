@@ -7,4 +7,5 @@ from .models import UserProfile
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ['first_name', 'last_name', 'slug', 'bio', 'avatar']
+    list_display = ('first_name', 'last_name', 'slug', 'bio', 'avatar')
+    list_editable = ('slug', 'bio', 'avatar')
